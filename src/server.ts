@@ -4,14 +4,15 @@ import { pool, connectToDb } from './connections.js';
 
 await connectToDb();
 
-
 function mainMenu(){
+    //Prompt for main menu with list of functions
     inquirer.prompt([{
         type: 'list',
         message: 'What would you like to do?',
         name: 'choice',
         choices: ['View all departments', 'View all roles', 'View all employees', 'Add a department', 'Add a role', 'Add an employee', 'Update an employee role', 'Exit program'],
     },])
+        //Does appropriate function depending on choice made
         .then((answer) => {
             if (answer.choice === 'View all departments') {
                 pool.query('SELECT name AS Department_name, department.id AS Department_ID FROM department;', (err: Error, result: QueryResult) => {
@@ -57,6 +58,7 @@ function mainMenu(){
 }
 
 function addDepartment() {
+    //Prompts for name of new department then adds new department to department table
     inquirer.prompt([{
         type: 'input',
         message: 'Input name of new department',
@@ -76,6 +78,7 @@ function addDepartment() {
 }
 
 function addRole() {
+    //Prompts for details of new role then adds new role to role table
     inquirer.prompt([{
         type: 'input',
         message: 'Input title of new role',
@@ -104,6 +107,7 @@ function addRole() {
 }
 
 function addEmployee() {
+    //Prompts for details of new employee then adds new employee to employee table
     inquirer.prompt([{
         type: 'input',
         message: 'Input first name of new employee',
@@ -156,8 +160,7 @@ function listIDs(){
 }
 
 function updateEmployeeRole() {
-    
-
+    //After listing needed IDs, prompts for wanted IDs
     inquirer.prompt([{
         type: 'input',
         message: 'Input employee ID',
@@ -180,4 +183,5 @@ function updateEmployeeRole() {
     })
 }
 
+//Initiates main loop
 mainMenu();
